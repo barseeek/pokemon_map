@@ -78,6 +78,14 @@ def show_pokemon(request, pokemon_id):
                 "pokemon_id": pokemon.prev_evolution.id,
                 "img_url": pokemon.prev_evolution.image.url
             }
+    next_evo = pokemon.next_evolutions.all()
+    if next_evo.count():
+        next_pokemon = next_evo.first()
+        pokemon_on_page['next_evolution'] = {
+                "title_ru": next_pokemon.title,
+                "pokemon_id": next_pokemon.id,
+                "img_url": next_pokemon.image.url
+            }
     return render(request, 'pokemon.html', context={
         'map': folium_map._repr_html_(),
         'pokemon': pokemon_on_page

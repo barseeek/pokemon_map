@@ -57,7 +57,6 @@ def show_pokemon(request, pokemon_id):
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
     current_datetime = timezone.now()
     pokemon_entities = pokemon.entities.filter(appeared_at__lte=current_datetime, disappeared_at__gt=current_datetime)
-    #pokemon_entities = PokemonEntity.objects.filter(pokemon=pokemon, appeared_at__lte=current_datetime, disappeared_at__gt=current_datetime)
     for pokemon_entity in pokemon_entities:
         add_pokemon(
             folium_map,
@@ -79,7 +78,7 @@ def show_pokemon(request, pokemon_id):
                 "pokemon_id": pokemon.prev_evolution.id,
                 "img_url": pokemon.prev_evolution.image.url
             }
-    next_pokemon = pokemon.next_evolutions.all().first()
+    next_pokemon = pokemon.next_evolutions.first()
     if next_pokemon:
         pokemon_on_page['next_evolution'] = {
                 "title_ru": next_pokemon.title,
